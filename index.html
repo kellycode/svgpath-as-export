@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Box</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="lib/svgpath_bundle.js"></script>
+    </head>
+    <body>
+        <div>TODO write content</div>
+
+        <script>
+            //var svgpath = require('./lib/svgpath');
+            //import{SvgPath} from './lib/svgpath.js';
+
+            //console.log(SvgPath)
+
+            function hotItUp() {
+                var transformed = svgpath('M 10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10')
+                        .scale(1)
+                        .translate(100, 200)
+                        .rel()
+                        .round(1)
+                        .unarc()
+                        .transform('rotate(90)')
+                        .round(4)
+                        .toString();
+
+                console.log(transformed);
+            }
+
+
+        </script>
+
+        <script type="module">
+            import { A2C } from './lib/export_A2C.js';
+            import { Ellipse } from './lib/export_Ellipse.js';
+            import { Matrix } from './lib/export_Matrix.js';
+            import { SvgUtils } from './lib/export_SvgUtils.js';
+            import { PathParse } from './lib/export_PathParse.js';
+            
+            window.A2C = A2C;
+            window.Ellipse = Ellipse;
+            window.Matrix = Matrix;
+            window.SvgUtils = SvgUtils;
+            window.PathParse = PathParse;
+
+            hotItUp();
+        </script>
+    </body>
+</html>
