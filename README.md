@@ -1,10 +1,13 @@
+
+
 # svgpath-mod
-an fontello/svgpath fork removing require, adding import, removing most functions and using classes
+A [fontello/svgpath](https://github.com/fontello/svgpath) clone to remove require and use import.
+
+Used classes where appropriate and, in a line-by-line code review, modified names (e.g., no 1 letter vars) to make things more descriptive.  Didn't branch it as my changes are fairly trivial and reflect personal preferences only.
 
 
 API
 ---
-
 All methods are chainable (return self).
 
 
