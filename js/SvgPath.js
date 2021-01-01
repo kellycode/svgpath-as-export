@@ -188,7 +188,6 @@ SvgPath.prototype.__evaluateStack = function () {
     let t = 0;
 
     while (--i >= 0) {
-        console.log(t);
         m.matrix(this.__stack[i].toArray());
         t = i;
     }

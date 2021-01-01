@@ -17,6 +17,7 @@ function combine(m1, m2) {
 function Matrix(request) {
 
     if (!(this instanceof Matrix)) {
+        // a bit of reflection
         console.log('new matrix ' + request);
         return new Matrix();
     }

@@ -288,6 +288,7 @@ function combine(m1, m2) {
 function Matrix(request) {
 
     if (!(this instanceof Matrix)) {
+        // a bit of reflection
         console.log('new matrix ' + request);
         return new Matrix();
     }
@@ -994,12 +995,9 @@ SvgPath.prototype.__evaluateStack = function () {
 
     m = Matrix('evaluate');
     i = this.__stack.length;
-    let t = 0;
 
     while (--i >= 0) {
-        console.log(t);
         m.matrix(this.__stack[i].toArray());
-        t = i;
     }
 
     this.__evaluateMatrix(m);
