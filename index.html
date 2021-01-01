@@ -9,11 +9,16 @@
         <div>Svg Modder</div>
 
         <script type="module">
-            import { SvgPath as svgpath } from './lib/SvgPath.js';
+            import { SvgPath } from './js/SvgPath.js';
+            //import { SvgPath } from './js/bundle.js';
+            
+            //rollup SvgPath.js --format es --name "myBundle" --file bundle.js
 
-            var transformed = svgpath('M 10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10')
-                    .scale(1)
+
+            var transformed = SvgPath('M 10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10')
+                    .scale(1, 1)
                     .translate(100, 200)
+                    .rotate(90)
                     .rel()
                     .round(1)
                     .unarc()

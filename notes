@@ -1,0 +1,3 @@
+
+Rollup build commands:
+rollup SvgPath.js --format es --name "myBundle" --file bundle.js (iife or es)
