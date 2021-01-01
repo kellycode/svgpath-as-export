@@ -872,8 +872,8 @@ SvgPath.from = function (src) {
 };
 
 
-SvgPath.prototype.__matrix = function (segmentMatrix) {
-    var self = this, i;
+SvgPath.prototype.__evaluateMatrix = function (segmentMatrix) {
+    let self = this, i;
 
     // quick exit for empty matrix
     if (!segmentMatrix.queue.length) {
@@ -920,8 +920,8 @@ SvgPath.prototype.__matrix = function (segmentMatrix) {
                  }*/
 
                 // Transform rx, ry and the x-axis-rotation
-                var ma = segmentMatrix.toArray();
-                var ellipse = new Ellipse(s[1], s[2], s[3]).transform(ma);
+                let ma = segmentMatrix.toArray();
+                let ellipse = new Ellipse(s[1], s[2], s[3]).transform(ma);
 
                 // flip sweep-flag if matrix is not orientation-preserving
                 if (ma[0] * ma[3] - ma[1] * ma[2] < 0) {
@@ -987,30 +987,33 @@ SvgPath.prototype.__evaluateStack = function () {
     }
 
     if (this.__stack.length === 1) {
-        this.__matrix(this.__stack[0]);
+        this.__evaluateMatrix(this.__stack[0]);
         this.__stack = [];
         return;
     }
 
     m = Matrix('evaluate');
     i = this.__stack.length;
+    let t = 0;
 
     while (--i >= 0) {
+        console.log(t);
         m.matrix(this.__stack[i].toArray());
+        t = i;
     }
 
-    this.__matrix(m);
+    this.__evaluateMatrix(m);
     this.__stack = [];
 };
 
 
 // convert processed SvgPath back to string
 SvgPath.prototype.toString = function () {
-    var elements = [], skipCmd, cmd;
+    let elements = [], skipCmd, cmd;
 
     this.__evaluateStack();
 
-    for (var i = 0; i < this.segments.length; i++) {
+    for (let i = 0; i < this.segments.length; i++) {
         // remove repeating commands names
         cmd = this.segments[i][0];
         skipCmd = i > 0 && cmd !== 'm' && cmd !== 'M' && cmd === this.segments[i - 1][0];
@@ -1086,14 +1089,14 @@ SvgPath.prototype.transform = function (transformString) {
 // round coords with given decimal precition.
 // 0 by default (to integers)
 SvgPath.prototype.round = function (d) {
-    var contourStartDeltaX = 0, contourStartDeltaY = 0, deltaX = 0, deltaY = 0, l;
+    let contourStartDeltaX = 0, contourStartDeltaY = 0, deltaX = 0, deltaY = 0, l;
 
     d = d || 0;
 
     this.__evaluateStack();
 
     this.segments.forEach(function (s) {
-        var isRelative = (s[0].toLowerCase() === s[0]);
+        let isRelative = (s[0].toLowerCase() === s[0]);
 
         switch (s[0]) {
             case 'H':
@@ -1185,14 +1188,14 @@ SvgPath.prototype.round = function (d) {
 // current segment will be replaced to array of returned segments.
 // if empty array is returned, current regment will be deleted.
 SvgPath.prototype.iterate = function (iterator, keepLazyStack) {
-    var segments = this.segments,
+    let segments = this.segments,
             replacements = {},
             needReplace = false,
             lastX = 0,
             lastY = 0,
             countourStartX = 0,
             countourStartY = 0;
-    var i, j, newSegments;
+    let i, j, newSegments;
 
     if (!keepLazyStack) {
         this.__evaluateStack();
@@ -1200,14 +1203,14 @@ SvgPath.prototype.iterate = function (iterator, keepLazyStack) {
 
     segments.forEach(function (s, index) {
 
-        var res = iterator(s, index, lastX, lastY);
+        let res = iterator(s, index, lastX, lastY);
 
         if (Array.isArray(res)) {
             replacements[index] = res;
             needReplace = true;
         }
 
-        var isRelative = (s[0] === s[0].toLowerCase());
+        let isRelative = (s[0] === s[0].toLowerCase());
 
         // calculate absolute X and Y
         switch (s[0]) {
@@ -1270,7 +1273,7 @@ SvgPath.prototype.iterate = function (iterator, keepLazyStack) {
 SvgPath.prototype.abs = function () {
 
     this.iterate(function (s, index, x, y) {
-        var name = s[0],
+        let name = s[0],
                 nameUC = name.toUpperCase(),
                 i;
 
@@ -1309,7 +1312,7 @@ SvgPath.prototype.abs = function () {
 SvgPath.prototype.rel = function () {
 
     this.iterate(function (s, index, x, y) {
-        var name = s[0],
+        let name = s[0],
                 nameLC = name.toLowerCase(),
                 i;
 
@@ -1352,7 +1355,7 @@ SvgPath.prototype.rel = function () {
 // converts arcs to cubic bézier curves
 SvgPath.prototype.unarc = function () {
     this.iterate(function (s, index, x, y) {
-        var new_segments, nextX, nextY, result = [], name = s[0];
+        let new_segments, nextX, nextY, result = [], name = s[0];
 
         // Skip anything except arcs
         if (name !== 'A' && name !== 'a') {
@@ -1390,14 +1393,14 @@ SvgPath.prototype.unarc = function () {
 
 // converts smooth curves (with missed control point) to generic curves
 SvgPath.prototype.unshort = function () {
-    var segments = this.segments;
-    var prevControlX, prevControlY, prevSegment;
-    var curControlX, curControlY;
+    let segments = this.segments;
+    let prevControlX, prevControlY, prevSegment;
+    let curControlX, curControlY;
 
     // TODO: add lazy evaluation flag when relative commands supported
 
     this.iterate(function (s, idx, x, y) {
-        var name = s[0], nameUC = name.toUpperCase(), isRelative;
+        let name = s[0], nameUC = name.toUpperCase(), isRelative;
 
         // First command MUST be M|m, it's safe to skip.
         // Protect from access to [-1] for sure.
