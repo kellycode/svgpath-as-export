@@ -44,7 +44,7 @@ class SvgUtils {
             switch (cmd) {
                 case 'matrix':
                     if (params.length === 6) {
-                        matrix.matrix(params);
+                        matrix.queueMatrix(params);
                     }
                     return;
 

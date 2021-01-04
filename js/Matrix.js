@@ -26,7 +26,8 @@ function Matrix(request) {
 }
 
 
-Matrix.prototype.matrix = function (m) {
+Matrix.prototype.queueMatrix = function (m) {
+    // just scale by one so ignore
     if (m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0) {
         return this;
     }

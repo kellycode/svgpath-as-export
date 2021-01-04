@@ -52,7 +52,7 @@ SvgPath.from = function (src) {
         });
 
         svgPathObject.__stack = src.__stack.map(function (m) {
-            return Matrix('from').matrix(m.toArray());
+            return Matrix('from').queueMatrix(m.toArray());
         });
 
         return svgPathObject;
@@ -148,7 +148,7 @@ SvgPath.prototype.__evaluateMatrix = function (segmentMatrix) {
                 // make sense for coord shift transforms.
                 isRelative = index > 0;
 
-                p = segmentMatrix.calc(s[1], s[2], isRelative);
+                point = segmentMatrix.calc(s[1], s[2], isRelative);
                 result = ['m', point[0], point[1]];
                 break;
 
@@ -188,7 +188,7 @@ SvgPath.prototype.__evaluateStack = function () {
     let t = 0;
 
     while (--i >= 0) {
-        m.matrix(this.__stack[i].toArray());
+        m.queueMatrix(this.__stack[i].toArray());
         t = i;
     }
 
@@ -261,7 +261,7 @@ SvgPath.prototype.skewY = function (degrees) {
 
 // apply matrix transform (array of 6 elements)
 SvgPath.prototype.matrix = function (m) {
-    this.__stack.push(Matrix('matrix').matrix(m));
+    this.__stack.push(Matrix('matrix').queueMatrix(m));
     return this;
 };
 

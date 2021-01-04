@@ -1,0 +1,26 @@
+{
+  "name": "svgpath-mod",
+  "version": "0.1.0",
+  "description": "mod svgpath to use export",
+  "main": "home/index.html",
+  "dependencies": {
+    "gulp": "^4.0.2"
+  },
+  "devDependencies": {
+    "gulp-terser": "^2.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0"
+  },
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kellycode/svgpath-mod.git"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "kellycode",
+  "license": "MIT"
+}
