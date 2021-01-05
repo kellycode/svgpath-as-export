@@ -1,23 +1,30 @@
 const gulp = require('gulp');
-const concat = require('gulp-concat');
 const uglify = require('gulp-terser');
 const rename = require('gulp-rename');
+const replace = require('gulp-replace');
+const rollup = require('gulp-rollup');
 
 
 // DEPLOY JS
-const allJsFiles = 'js/*.js';;
+const allJsFiles = 'js/*.js';
 
-const allJsDest = './deploy/js';
+const allJsDest = './min';
 
-gulp.task('deploy_js', function () {
-    return gulp.src(allJsFiles)
-            .pipe(concat('svgpath.bundle.js'))
-            //.pipe(gulp.dest(allJsDest))
-            .pipe(rename('svgpath.min.js'))
+gulp.task('rollup', function (done) {
+    gulp.src('./js/*.js')
+            .pipe(rollup({
+                input: './js/SvgPath.js',
+                format: 'esm'
+            }))
+            .pipe(rename('svgpath.rollup.concat.js'))
+            .pipe(gulp.dest('./min'))
+            .pipe(rename('svgpath.rollup.min.js'))
             .pipe(uglify())
-            .pipe(gulp.dest(allJsDest));
+            .pipe(gulp.dest('./min'));
+
+    done();
 });
 
-gulp.task('default', gulp.series('deploy_js'));
-gulp.task('deploy', gulp.series('deploy_css', 'deploy_js', 'modules', 'img', 'icons'));
+
+gulp.task('default', gulp.series('rollup'));
 

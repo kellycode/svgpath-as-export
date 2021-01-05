@@ -8,3 +8,7 @@ rollup SvgPath.js --format es --file bundle.js
 iife format
 closure with one "name" global accessor
 rollup SvgPath.js --format es --name "SvgPathMod" --file iife_bundle.js
+
+
+browserify svgpath.js --standalone svgpath > svgpath_bundle.js
+
