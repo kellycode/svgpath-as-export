@@ -1,4 +1,6 @@
 
+
+Rollup
 Rollup build commands:
 
 es format
@@ -10,5 +12,17 @@ closure with one "name" global accessor
 rollup SvgPath.js --format es --name "SvgPathMod" --file iife_bundle.js
 
 
-browserify svgpath.js --standalone svgpath > svgpath_bundle.js
+
+
+Browserify
+To Build Original Require items with Browserify commands
+
+give a global accessor of svgpath
+browserify svgpath.js --standalone svgpath > browserify.concat.js
+
+just bundle it
+browserify svgpath.js -o browserify.bundle.js
+
+
+
 

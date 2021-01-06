@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>SVG Mod</title>
+    <title>SvgPath as Export</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -27,51 +27,49 @@
 
 
     <script type="module">
+        // just some testing items
         import { SvgPath } from './min/svgpath.rollup.min.js';
 
+        let ds_path = 'M 0,0 300,500 H 900 V 200 H 300';
         let small_path = 'M 10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10';
         let med_path = 'M0 318q0 13 9 21t22 9l250 0q14 0 22-9t9-21q0-13-9-23t-22-10l-250 0q-13 0-22 10t-9 23z m0 125q0 13 9 21t22 9l125 0q14 0 22-9t9-21q0-13-9-23t-22-10l-125 0q-13 0-22 10t-9 23z m62 125q0 13 9 21t22 9l125 0q14 0 22-9t9-21q0-13-9-23t-22-10l-125 0q-13 0-22 10t-9 23z m209-50q0 78 54 134t132 60q74 76 179 76t179-76q78-3 132-60t54-134q0-82-57-139t-139-57q-18 0-33 2-62-39-136-39t-136 39q-16-2-35-2-80 0-137 57t-57 139z m166-418q0 35 62 125l16-23q18-27 31-55 16-32 16-47 0-25-19-44t-44-19-44 19-19 44z m250-125q0 35 62 125l16-23q18-27 31-55 16-32 16-47 0-25-19-44t-44-19-44 19-19 44z' +
             'M0 349q0 215 141 356t356 141 356-141 141-356q0-182-103-313t-280-171q-9 17-34 52t-35 56q64-26 86-26 16 0 16 50 0 93-17 93-25 0-97-55 0 14-15 12l-5 0q-26 69-26 123 0 15 3 30 92-45 148-45 31 0 94 18t63 39q0 13-17 13-26 0-75-7t-75-7q-27 0-60 14t-33 38q0 5 2 8t5 3 6 0 8-1 9-1q9 0 26-3t25-3q31 0 127 37t96 57q0 12-19 17t-35 5q-14 0-42-8t-61-18-44-14q4 20 4 32 0 47-25 110t-58 93q-27 24-72 33-28 36-88 66t-106 30q-9 0-28-4t-24-5l-22-31 6-1q7 0 22 2t22 2q34 0 78-14-28-14-49-19-2-1-13-3t-19-3-14-6-7-12q56 6 84 6 38 0 60-7-77-9-119-53t-42-121q0-27 4-50 19-120 73-358 33-154 37-170l1-4q-160 50-251 186t-91 308z m283 124q0-6 3-12-1 16 18 28t36 12q8 0 20-5-10 13-29 13-17 0-33-10t-16-27z m33-75q0 13 11 24t24 11 24-11 11-24-11-24-24-11-24 11-11 24z m40 11q0-8 9-8t9 8q0 9-9 9t-9-9z m168 87q8 13 37 13 13 0 33-10-10 22-35 22-31 0-35-25z m23-78q0 12 9 21t20 9q12 0 21-9t9-21q0-11-9-20t-21-9q-11 0-20 9t-9 20z m35 10q0-8 7-8 8 0 8 8 0 7-8 7-7 0-7-7z' +
             'M0 432q0 105 53 188t137 132 181 74 195 25q29 0 43-1 115-6 226-41 87-28 166-75t147-109 108-147 41-176q0-13-1-19-11-152-121-256t-269-147q-107-30-229-30l-8 0q-201 0-315 53-6 2-7 6 0 2 3 2 1 0 4-1t4-1q50-12 89-12 24 0 47 5t44 20 21 40q0 12-6 24-9 16-59 34t-114 34-76 20q-80 26-139 66 0 1 4 10t6 15 7 12 9 6l179 0q9 0 17-22t21-44 36-22q18 0 31 12t13 30q0 11-84 199t-106 231q-6 15-16 15-8 0-13-9l-3-6q-8-15-52-114l-107-238-7-15q-95 109-95 234z m218-166q0 10 54 129l5 3q6 0 33-64t27-70q0-4-5-4l-108 0q-5 0-5 5z m307-123q0-45 47-45t47 45l0 388q0 45-47 45t-47-45l0-388z m185 0q0-45 47-45t47 45l0 181 92-185q13-29 41-29 32 0 46 29l91 185 0-181q0-45 47-45 48 0 48 45l0 388q0 45-47 45-35 0-47-29l-138-302-133 302q-14 29-48 29-46 0-46-45l0-388z';
 
-        setTimeout(function () {
-            document.getElementById('mysvgpath').setAttribute('d', med_path);
-        }, 0);
+        // give the svg a new path 'd' attribute value
+        document.getElementById('mysvgpath').setAttribute('d', ds_path);
 
-        setTimeout(function () {
-            let dattr = document.getElementById('mysvgpath').getAttribute('d');
+        // now test some kind of change
+        var transformed = SvgPath(ds_path)
+            .scale(1.5)
+            .translate(100,100)
+            .toString();
 
-            var transformed = SvgPath(dattr)
-                .translate(2, 150)
-                .scale(1)
-                .toString();
-            console.log(document.getElementById('mysvgpath').getBBox())
-            document.getElementById('mysvgpath').setAttribute('d', transformed);
-            console.log(transformed);
-        }, 0);
+        // apply the change to the path
+        document.getElementById('mysvgpath').setAttribute('d', transformed);
 
-
-        console.log(document.getElementById('mysvgpath').getBBox());
-
-
+        // need to bbox to rotate around the center
         let bbox = document.getElementById('mysvgpath').getBBox();
 
-        function doRotate() {
+        // rotate method
+        function testSomeChange() {
             setTimeout(function () {
                 let dattr = document.getElementById('mysvgpath').getAttribute('d');
+
                 var transformed = SvgPath(dattr)
-                    .rotate(2, 150)
-                    .scale(1)
+                    .rotate(15, bbox.width/2, bbox.height/2)
+                    .transform('rotate(15),scale(1.5,1.5)')
                     .toString();
-                console.log(document.getElementById('mysvgpath').getBBox());
+
                 document.getElementById('mysvgpath').setAttribute('d', transformed);
-            }, 500);
+
+                // maybe repeat the test
+                //testSomeChange();
+            }, 100);
         }
 
-            //doRotate();
-
-
-
+        // test something
+        //testSomeChange();
 
     </script>
 </body>
