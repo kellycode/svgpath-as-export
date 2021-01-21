@@ -1,6 +1,8 @@
 
 # svgpath-as-export
 
+I'll likely extract the bit out that scales the path, it's all I ever use.
+
 A [fontello/svgpath](https://github.com/fontello/svgpath) clone to update, remove require and use import.
 
 Used classes where appropriate and made things a little more descriptive. Didn't branch it as my changes are fairly trivial and reflect my dev world requirements only. 
